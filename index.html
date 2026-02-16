@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rawg</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+  <body class="bg-black text-white">
+    <div class="flex min-h-screen">
+<div class="w-60 hidden lg:block p-6 shrink-0">
+        <h1 class="text-2xl font-black mb-8 tracking-widest">RAWG</h1>
+        <nav class="space-y-4 text-lg font-bold text-gray-400">
+          <a class=" text-white">All</a>
+          <ul id="genre-list" class="space-y-3 white">
+          </ul>        
+        </nav>
+      </div>
+
+      <main class="flex-1 p-4 md:p-10">
+        <div id="loader" class="hidden flex justify-center items-center py-20">
+        <i class="fas fa-spinner fa-spin text-5xl text-gray-500"></i>
+        </div>
+        <div class="mb-6">
+       <input type="text" id="search-bar" placeholder="Search" class="w-full bg-gray-800 rounded-lg py-3 pl-4 text-white "/>
+       <select id="sort-order" class="bg-gray-800 text-white rounded-lg my-8 px-4 py-3  border-r-8 border-transparent cursor-pointer">
+      <option value="-metacritic">Metacritic</option>
+      <option value="-rating">Rating</option>
+      <option value="-released">Release Date</option>
+      </select>
+        <h2 class="text-4xl md:text-6xl font-bold mb-2">New and trending</h2>
+        <span id="game-count" class="text-xl text-gray-300 ml-4"></span>
+        <div id="game-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+           </div>
+      </main>
+    </div>
+
+    <div id="modal" class="fixed inset-0 bg-black hidden flex justify-center items-center overflow-auto h-auto">
+      <div id="modal-content" class="bg-gray-800  max-w-4xl  rounded-xl">
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
