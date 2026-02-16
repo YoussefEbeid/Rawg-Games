@@ -8,6 +8,8 @@ let searchText: string = "";
 let debounceTimer: number;   
 const searchBar = document.   getElementById('search-bar') as HTMLInputElement;
 const loader = document.getElementById('loader') as HTMLDivElement;
+let observer: IntersectionObserver | null = null;
+
 searchBar.addEventListener('input', () => {
   clearTimeout(debounceTimer);
   debounceTimer = window.setTimeout(() => {
@@ -111,6 +113,7 @@ async function getGames() {
           </div>
         </div>`;
       });
+    setupObserver();
   } catch (err) {
     console.log(err);
     if (gameGrid) {
@@ -207,26 +210,44 @@ modal.onclick = function(e) {
     closePopup();
   }
 };
-
-
-  function isInViewport(e: HTMLElement) {
-    const rect = e.getBoundingClientRect();
-    return (
-      rect.top < window.innerHeight &&
-      rect.bottom > 0
-    );
-  }
-
-
-window.addEventListener("scroll", () => {
+function setupObserver() {
   const el = document.querySelector("#fetch-item");
-  
-  
-  if (el && isInViewport(el as HTMLElement)) {
-    console.log("Visible!");
-  }
 
-  if (nextPage && !fetchGames) {
-    getGames();
-  }
-});
+  if (!el) return;
+  if (observer) observer.disconnect();
+
+  observer = new IntersectionObserver(([entry]) => {
+    if (!entry) return;
+
+    if (entry.isIntersecting && nextPage && !fetchGames) {
+      console.log("Fetching");
+      getGames();
+    }
+  }, {
+    rootMargin: "300px",
+    threshold: 0
+  });
+
+  observer.observe(el);
+}
+
+
+
+//   function isInViewport(e: Element) {
+//     const rect = e.getBoundingClientRect();
+//     return (
+//       rect.top < window.innerHeight &&
+//       rect.bottom > 0
+//     );
+//   }
+
+
+// window.addEventListener("scroll", () => {
+//   const el = document.querySelector("#fetch-item");  
+//   const fetchCondition = el && isInViewport(el) && nextPage && !fetchGames;
+//   if (fetchCondition) {
+//     console.log("Visible!");
+//         getGames();
+
+//   }
+// });
